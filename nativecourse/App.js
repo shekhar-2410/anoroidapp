@@ -1,64 +1,37 @@
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  Platform,
-  ScrollView,
-} from "react-native";
-import PokemonCard from "./components/PokemonCard";
-
-const pokemonData = [
-  {
-    name: "Charmander",
-    image: require("./assets/charmander.png"),
-    type: "Fire",
-    hp: 39,
-    moves: ["Scratch", "Ember", "Growl", "Leer"],
-    weaknesses: ["Water", "Rock"],
-  },
-  {
-    name: "Squirtle",
-    image: require("./assets/squirtle.png"),
-    type: "Water",
-    hp: 44,
-    moves: ["Tackle", "Water Gun", "Tail Whip", "Withdraw"],
-    weaknesses: ["Electric", "Grass"],
-  },
-  {
-    name: "Bulbasaur",
-    image: require("./assets/bulbasaur.png"),
-    type: "Grass",
-    hp: 45,
-    moves: ["Tackle", "Vine Whip", "Growl", "Leech Seed"],
-    weaknesses: ["Fire", "Ice", "Flying", "Psychic"],
-  },
-  {
-    name: "Pikachu",
-    image: require("./assets/pikachu.png"),
-    type: "Electric",
-    hp: 65,
-    moves: ["Quick Attack", "Thunderbolt", "Tail Whip", "Growl"],
-    weaknesses: ["Ground"],
-  },
-];
+import { StyleSheet, View, StatusBar } from "react-native";
+import CategoryScreen from "./screens/CategoryScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import MealOverviewScreen from "./screens/MealOverviewScreen";
+import MealDetailScreen from "./screens/MealDetailScreen";
+const Stack = createStackNavigator();
 export default function App() {
   return (
-    <View style={styles.container}>
-      <ScrollView>
-        <SafeAreaView>
-          {pokemonData.map((pokemon, index) => (
-            <PokemonCard key={index} {...pokemon} />
-          ))}
-        </SafeAreaView>
-      </ScrollView>
-    </View>
+    <>
+      <StatusBar style="dark" />
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="MealsCategory"
+            component={CategoryScreen}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="MealsOverview"
+            component={MealOverviewScreen}
+            // options={({ route, navigation }) => {
+            //   const catId = route.params.categoryId;
+            //   return {
+            //     title: catId,
+            //   };
+            // }}
+          />
+          <Stack.Screen name="MealDetails" component={MealDetailScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F5F5F5",
-    paddingTop: Platform.OS === "android" ? 45 : 0,
-  },
+  container: {},
 });
